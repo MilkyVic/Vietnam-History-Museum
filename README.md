@@ -1,8 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+"Bảo tàng số 1954–1975" – website dòng thời gian và bản đồ sự kiện về cuộc kháng chiến chống Mỹ cứu nước. Khung dự án dùng [Next.js](https://nextjs.org) + Tailwind + React Leaflet.
 
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
 npm run dev
@@ -16,18 +16,21 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Nội dung dữ liệu nằm tại `src/content/data.ts`.
+
+- Thêm/sửa sự kiện trong `events` (id, slug, title, date, location, summary, sources).
+- Nguồn tham khảo trong `sources` (id, title, url, year, perspective).
+
+Trang chủ hiển thị bản đồ và dòng thời gian; trang chi tiết nằm ở `/events/[slug]`.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+## AI (stub)
 
-To learn more about Next.js, take a look at the following resources:
+API `POST /api/ask` hiện trả về 501. Để tích hợp RAG:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Thêm kho tư liệu (PDF/TXT/Markdown) → trích xuất → nhúng vector (pgvector/Qdrant).
+- Gọi OpenAI/LLM nội bộ để trả lời, bắt buộc trả kèm trích dẫn.
 
 ## Deploy on Vercel
 
