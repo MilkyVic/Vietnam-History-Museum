@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -32,7 +32,7 @@ const contextSources: Source[] = [
     url: "https://quochoi.vn/",
   },
   {
-    name: "Vietnam Law Magazine � The Vietnam State's structure and operation (1975�1986)",
+    name: "Vietnam Law Magazine � The Vietnam State's structure and operation (1975�1986)",
     url: "https://vietnamlawmagazine.vn/the-vietnam-states-structure-and-operation-during-the-1975-1986-period-4503.html",
   },
 ];
@@ -70,7 +70,7 @@ const toolCards = [
     description:
       "Hệ thống sổ gạo, tem phiếu bảo đảm nhu yếu phẩm tối thiểu cho cán bộ, công nhân viên và cư dân đô thị.",
     source: {
-      name: "Vietnam Law Magazine � The Vietnam State's structure and operation (1975�1986)",
+      name: "Vietnam Law Magazine � The Vietnam State's structure and operation (1975�1986)",
       url: "https://vietnamlawmagazine.vn/the-vietnam-states-structure-and-operation-during-the-1975-1986-period-4503.html",
     },
   },
@@ -426,4 +426,5 @@ export default function BaoCapAnswerPage() {
     </div>
   );
 }
+
 

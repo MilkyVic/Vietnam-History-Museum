@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 
 export default function SiteHeader() {
   return (
@@ -7,7 +7,7 @@ export default function SiteHeader() {
         <span className="logo-mark" />
         <span className="logo-text">
           <small>Bảo tàng số</small>
-          <span>1954–1975</span>
+          <span>1975–1986</span>
         </span>
       </Link>
       <nav className="site-nav">

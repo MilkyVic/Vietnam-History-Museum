@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
@@ -16,9 +16,9 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Bảo tàng số 1954–1975",
+  title: "Bảo tàng số 1975–1986",
   description:
-    "Khám phá cuộc kháng chiến chống Mỹ cứu nước (1954–1975) qua dòng thời gian, bản đồ và tư liệu có trích dẫn.",
+    "Khám phá Việt Nam thời kỳ hậu thống nhất (1975–1986) với bản đồ sự kiện, dòng thời gian và tư liệu có trích dẫn rõ ràng.",
 };
 
 export default function RootLayout({
@@ -28,13 +28,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="site-container">
           <SiteHeader />
           <main>{children}</main>
-          <footer>© {new Date().getFullYear()} Bảo tàng số 1954–1975 • Phiên bản trình diễn phục vụ học tập</footer>
+          <footer>© {new Date().getFullYear()} Bảo tàng số 1975–1986 • Phiên bản trình diễn phục vụ học tập</footer>
         </div>
       </body>
     </html>
