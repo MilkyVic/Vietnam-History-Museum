@@ -16,7 +16,6 @@ export default function DiscussionListPage() {
     <div className="section">
       <header className="mb-10 space-y-3">
         <span className="hero-label">Không gian thảo luận</span>
-        <h1 className="hero-title">Chủ đề phân tích & lập luận</h1>
         <p className="hero-description">
           Các chủ đề được biên soạn theo cấu trúc lập luận nhiều bước, đi kèm bộ nguồn minh chứng chính thức. Chọn một chủ đề để xem
           toàn bộ dữ liệu, biểu đồ và kết luận cân bằng.

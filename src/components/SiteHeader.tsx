@@ -15,7 +15,9 @@ export default function SiteHeader() {
         <Link href="/gioi-thieu">Giới thiệu</Link>
         <Link href="/thao-luan">Thảo luận</Link>
         <Link href="/dia-diem">Địa điểm</Link>
+        <Link href="/chatbot">Chatbot</Link>
       </nav>
     </header>
   );
 }
+

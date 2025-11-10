@@ -101,7 +101,7 @@ const policyEvents = [
     title: "Cải cách giá–lương–tiền",
     source: {
       name: "Tư liệu NHNN về đổi tiền 1985",
-      url: "https://www.sbv.gov.vn/",
+      url: "https://vbpl.vn/nganhangnhanuoc/Pages/vbpq-toanvan.aspx?ItemID=3187",
       kind: "GOV",
     },
   },
@@ -125,7 +125,7 @@ const claims = [
       "Sau 1975: hậu chiến nặng nề, cấm vận, thiếu vốn – vật tư, hai miền vừa thống nhất → nhu cầu thống nhất quản lý, phân phối tối thiểu và khôi phục sản xuất.",
     sources: [
       { name: "vietnam.gov.vn – Economy (1975–1986)", url: "https://vietnam.gov.vn/economy-68968" },
-      { name: "Quốc hội khóa VI – Kỳ họp I (1976)", url: "https://quochoi.vn/" },
+      { name: "Quốc hội khóa VI – Kỳ họp I (1976)", url: "https://quochoi.vn/tulieuquochoi/tulieu/quochoicackhoa/Pages/khoasau.aspx?ItemID=23993" },
     ],
   },
   {
@@ -136,7 +136,7 @@ const claims = [
     sources: [
       { name: "Chỉ thị 100/CT-TW (1981)", url: "https://thuvienphapluat.vn/van-ban/Thuong-mai/Chi-thi-100-CT-TW-1981-khoan-san-pham/" },
       { name: "Quyết định 25-CP (1981)", url: "https://thuvienphapluat.vn/van-ban/Thuong-mai/Quyet-dinh-25-CP-1981-mo-rong-quyen-tu-chu-xi-nghiep/" },
-      { name: "NHNN – tư liệu cải cách 1985", url: "https://www.sbv.gov.vn/" },
+      { name: "NHNN – tư liệu cải cách 1985", url: "https://vbpl.vn/nganhangnhanuoc/Pages/vbpq-toanvan.aspx?ItemID=3187" },
     ],
   },
   {
@@ -361,7 +361,7 @@ export default function AnswerModeBaoCap() {
               <SourceList sources={[
                 { name: "vietnam.gov.vn – Economy", url: "https://vietnam.gov.vn/economy-68968" },
                 { name: "Văn kiện ĐH IV/V/VI", url: "https://dangcongsan.vn/van-kien" },
-                { name: "Quốc hội khóa VI (1976)", url: "https://quochoi.vn/" },
+                { name: "Quốc hội khóa VI (1976)", url: "https://quochoi.vn/tulieuquochoi/tulieu/quochoicackhoa/Pages/khoasau.aspx?ItemID=23993" },
                 { name: "Chỉ thị 100/CT-TW (1981)", url: "https://thuvienphapluat.vn/van-ban/Thuong-mai/Chi-thi-100-CT-TW-1981-khoan-san-pham/" },
                 { name: "Niên giám Thống kê (GSO)", url: "https://www.gso.gov.vn/" },
               ]} />

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
@@ -29,11 +29,11 @@ const contextSources: Source[] = [
   },
   {
     name: "Quốc hội Việt Nam khóa VI – Kỳ họp thứ nhất (1976)",
-    url: "https://quochoi.vn/",
+    url: "https://quochoi.vn/tulieuquochoi/tulieu/quochoicackhoa/Pages/khoasau.aspx?ItemID=23993",
   },
   {
-    name: "Vietnam Law Magazine � The Vietnam State's structure and operation (1975�1986)",
-    url: "https://vietnamlawmagazine.vn/the-vietnam-states-structure-and-operation-during-the-1975-1986-period-4503.html",
+    name: "Redsvn-Sơ lược về chế độ tem phiếu ở Việt Nam thời bao cấp",
+    url: "https://redsvn.net/so-luoc-ve-che-do-tem-phieu-o-viet-nam-thoi-bao-cap2/",
   },
 ];
 
@@ -53,7 +53,7 @@ const toolCards = [
       "Quốc doanh giữ vai trò chủ đạo; QĐ 25-CP mở rộng quyền tự chủ hạch toán nhưng vẫn trong khuôn khổ kế hoạch.",
     source: {
       name: "Quyết định 25-CP (1981)",
-      url: "https://thuvienphapluat.vn/van-ban/Thuong-mai/Quyet-dinh-25-CP-1981-mo-rong-quyen-tu-chu-xi-nghiep-quoc-doanh-44033.aspx",
+      url: "https://thuvienphapluat.vn/van-ban/Doanh-nghiep/Quyet-dinh-25-CP-chu-truong-phat-huy-quyen-chu-dong-san-xuat-kinh-doanh-tu-chu-tai-chinh-cua-xi-nghiep-quoc-doanh-43040.aspx",
     },
   },
   {
@@ -62,7 +62,7 @@ const toolCards = [
       "Trao khoán đến nhóm và người lao động trong HTX nông nghiệp nhằm khuyến khích sản lượng lương thực.",
     source: {
       name: "Chỉ thị 100-CT/TW",
-      url: "https://thuvienphapluat.vn/van-ban/Thuong-mai/Chi-thi-100-CT-TW-1981-khoan-san-pham-43959.aspx",
+      url: "https://thuvienphapluat.vn/van-ban/Lao-dong-Tien-luong/Chi-thi-100-CT-TW-1981-Cai-tien-cong-tac-khoan-mo-rong-san-pham-den-nhom-lao-dong-hop-tac-xa-nong-nghiep-247358.aspx",
     },
   },
   {
@@ -70,8 +70,8 @@ const toolCards = [
     description:
       "Hệ thống sổ gạo, tem phiếu bảo đảm nhu yếu phẩm tối thiểu cho cán bộ, công nhân viên và cư dân đô thị.",
     source: {
-      name: "Vietnam Law Magazine � The Vietnam State's structure and operation (1975�1986)",
-      url: "https://vietnamlawmagazine.vn/the-vietnam-states-structure-and-operation-during-the-1975-1986-period-4503.html",
+      name: "Redsvn-Sơ lược về chế độ tem phiếu ở Việt Nam thời bao cấp",
+      url: "https://redsvn.net/so-luoc-ve-che-do-tem-phieu-o-viet-nam-thoi-bao-cap2/",
     },
   },
   {
@@ -80,7 +80,7 @@ const toolCards = [
       "Xóa bỏ hai giá, đổi tiền, trả lương bằng tiền nhằm chuẩn bị chuyển sang cơ chế hạch toán.",
     source: {
       name: "Ngân hàng Nhà nước – Tài liệu đổi tiền 1985",
-      url: "https://www.sbv.gov.vn/",
+      url: "https://vbpl.vn/nganhangnhanuoc/Pages/vbpq-toanvan.aspx?ItemID=3187",
     },
   },
 ];
@@ -115,7 +115,7 @@ const outcomeSources: Source[] = [
   },
   {
     name: "Ngân hàng Nhà nước – Tư liệu cải cách giá lương tiền 1985",
-    url: "https://www.sbv.gov.vn/",
+    url: "https://vbpl.vn/nganhangnhanuoc/Pages/vbpq-toanvan.aspx?ItemID=3187",
   },
   {
     name: "FAOStat – Vietnam crop yield",
@@ -137,7 +137,7 @@ const adjustments = [
     sources: [
       {
         name: "Chỉ thị 100-CT/TW",
-        url: "https://thuvienphapluat.vn/van-ban/Thuong-mai/Chi-thi-100-CT-TW-1981-khoan-san-pham-43959.aspx",
+        url: "https://thuvienphapluat.vn/van-ban/Lao-dong-Tien-luong/Chi-thi-100-CT-TW-1981-Cai-tien-cong-tac-khoan-mo-rong-san-pham-den-nhom-lao-dong-hop-tac-xa-nong-nghiep-247358.aspx",
       },
     ],
   },
@@ -148,7 +148,7 @@ const adjustments = [
     sources: [
       {
         name: "Quyết định 25-CP (1981)",
-        url: "https://thuvienphapluat.vn/van-ban/Thuong-mai/Quyet-dinh-25-CP-1981-mo-rong-quyen-tu-chu-xi-nghiep-quoc-doanh-44033.aspx",
+        url: "https://thuvienphapluat.vn/van-ban/Doanh-nghiep/Quyet-dinh-25-CP-chu-truong-phat-huy-quyen-chu-dong-san-xuat-kinh-doanh-tu-chu-tai-chinh-cua-xi-nghiep-quoc-doanh-43040.aspx",
       },
     ],
   },
@@ -159,7 +159,7 @@ const adjustments = [
     sources: [
       {
         name: "Ngân hàng Nhà nước – Tư liệu đổi tiền 1985",
-        url: "https://www.sbv.gov.vn/",
+        url: "https://vbpl.vn/nganhangnhanuoc/Pages/vbpq-toanvan.aspx?ItemID=3187",
       },
     ],
   },
@@ -423,7 +423,25 @@ export default function BaoCapAnswerPage() {
           ))}
         </ol>
       </section>
+
+      <section className="section">
+        <h2 className="section-heading">Video tóm tắt nhanh</h2>
+        <p className="copy-block text-sm text-gray-300">
+          Đoạn video dưới đây khái quát lại những luận điểm chính về cơ chế bao cấp giai đoạn 1975–1986, giúp người học củng cố
+          nội dung sau khi đọc phần thảo luận.
+        </p>
+        <div className="mt-4 overflow-hidden rounded-3xl border border-white/10 shadow-lg shadow-black/40">
+          <div className="relative w-full pt-[56.25%]">
+            <iframe
+              className="absolute left-0 top-0 h-full w-full"
+              src="https://www.youtube.com/embed/5-mKS_4ni4c"
+              title="Tóm tắt cơ chế bao cấp"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
-
