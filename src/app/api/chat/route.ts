@@ -1,5 +1,4 @@
-﻿import { NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { NextResponse } from "next/server";
 
 type ChatMessage = {
   role: "user" | "model";
@@ -12,40 +11,64 @@ type RequestPayload = {
   history: ChatMessage[];
 };
 
-const MODEL_NAME = "gemini-2.5-pro";
-const HARDCODED_API_KEY = "AIzaSyDl5kCelZWrxnMJS1eMiuvf4tuulqdarZA"; // Nếu muốn gắn key trực tiếp tại đây.
+const MODEL_NAME = "google/gemma-3-27b-it:free";
+const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
+const HARDCODED_API_KEY = "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"; // N?u c?n thi?t c� th? t?m g?n key OpenRouter t?i d�y (kh�ng khuy?n kh�ch).
+const REFERER = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || "http://localhost:3000";
+const APP_TITLE = "Bao cap chatbot";
 
 export async function POST(request: Request) {
   try {
     const body = (await request.json()) as RequestPayload;
-    const apiKey = body.apiKey || process.env.GEMINI_API_KEY || HARDCODED_API_KEY;
+    const apiKey = body.apiKey || process.env.OPENROUTER_API_KEY || HARDCODED_API_KEY;
 
     if (!apiKey) {
-      return NextResponse.json({ error: "Thiếu API key của Gemini." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Thi?u API key c?a OpenRouter (OPENROUTER_API_KEY)." },
+        { status: 400 }
+      );
     }
 
     const history = body.history || [];
-    const contents = history.map((entry) => ({
-      role: entry.role === "model" ? "model" : "user",
-      parts: [{ text: entry.text }],
-    }));
+    const messages: Array<{ role: "system" | "user" | "assistant"; content: string }> = [];
 
     if (body.systemPrompt) {
-      contents.unshift({
-        role: "user",
-        parts: [{ text: body.systemPrompt }],
-      });
+      messages.push({ role: "system", content: body.systemPrompt });
     }
 
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-    const result = await model.generateContent({ contents });
-    const text = result?.response?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+    history.forEach((entry) => {
+      messages.push({
+        role: entry.role === "model" ? "assistant" : "user",
+        content: entry.text,
+      });
+    });
+
+    const response = await fetch(OPENROUTER_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+        "HTTP-Referer": REFERER,
+        "X-Title": APP_TITLE,
+      },
+      body: JSON.stringify({
+        model: MODEL_NAME,
+        messages,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("OpenRouter error", response.status, errorText);
+      return NextResponse.json({ error: "Kh�ng th? k?t n?i OpenRouter." }, { status: 502 });
+    }
+
+    const data = await response.json();
+    const text = data?.choices?.[0]?.message?.content || "";
 
     return NextResponse.json({ text });
   } catch (error) {
     console.error("Chat route error", error);
-    return NextResponse.json({ error: "Không thể xử lý yêu cầu." }, { status: 500 });
+    return NextResponse.json({ error: "Kh�ng th? x? l� y�u c?u." }, { status: 500 });
   }
 }
-
