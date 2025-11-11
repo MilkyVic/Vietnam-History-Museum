@@ -56,7 +56,7 @@ export const data: MuseumData = {
     {
       id: "directive-100",
       title: "Chỉ thị 100-CT/TW (1981)",
-      url: "https://vi.wikipedia.org/wiki/Ch%E1%BB%89_th%E1%BB%8B_100-CT/TW",
+      url: "https://thuvienphapluat.vn/van-ban/Lao-dong-Tien-luong/Chi-thi-100-CT-TW-1981-Cai-tien-cong-tac-khoan-mo-rong-san-pham-den-nhom-lao-dong-hop-tac-xa-nong-nghiep-247358.aspx",
       publisher: "Ban Bí thư",
       year: 1981,
       perspective: "VN",
@@ -66,7 +66,7 @@ export const data: MuseumData = {
     {
       id: "decree-25-26",
       title: "Quyết định 25-CP & 26-CP (1981)",
-      url: "https://vi.wikipedia.org/wiki/%C4%90%E1%BB%95i_m%E1%BB%9Bi_(Vi%E1%BB%87t_Nam)#Quy%E1%BA%BFt_%C4%91%E1%BB%8Bnh_25-CP_v%C3%A0_26-CP",
+      url: "https://tapchicongthuong.vn/cac-quyet-sach-dau-tien-voi-doanh-nghiep-nha-nuoc-109697.htm",
       publisher: "Chính phủ Việt Nam",
       year: 1981,
       perspective: "VN",
@@ -96,7 +96,7 @@ export const data: MuseumData = {
     {
       id: "price-wage-reform-1985",
       title: "Cải cách giá – lương – tiền (1985)",
-      url: "https://vi.wikipedia.org/wiki/C%E1%BA%A3i_c%C3%A1ch_gi%C3%A1_%E2%80%93_l%C6%B0%C6%A1ng_%E2%80%93_ti%E1%BB%81n",
+      url: "https://vi.wikipedia.org/wiki/Gi%C3%A1_%E2%80%93_l%C6%B0%C6%A1ng_%E2%80%93_ti%E1%BB%81n_(Vi%E1%BB%87t_Nam)",
       publisher: "Chính phủ Việt Nam",
       year: 1985,
       perspective: "VN",
@@ -106,7 +106,7 @@ export const data: MuseumData = {
     {
       id: "politburo-1986",
       title: "Kết luận Bộ Chính trị 8-1986",
-      url: "https://vi.wikipedia.org/wiki/%C4%90%E1%BB%95i_m%E1%BB%9Bi_(Vi%E1%BB%87t_Nam)#K%E1%BA%BFt_lu%E1%BA%ADn_B%E1%BB%99_Ch%C3%ADnh_tr%E1%BB%8B_(8-1986)",
+      url: "https://ussh.vnu.edu.vn/vi/news/nhan-vat-su-kien/su-bo-sung-phat-trien-duong-loi-doi-moi-cua-dang-trong-thoi-ky-doi-moi-1986-2016-14946.html#:~:text=B%C6%B0%E1%BB%9Bc%20%C4%91%E1%BB%99t%20ph%C3%A1%20th%E1%BB%A9%20ba%20l%C3%A0%20H%E1%BB%99i%20ngh%E1%BB%8B,ti%E1%BA%BFn%20t%E1%BB%9Bi%20th%E1%BB%B1c%20hi%E1%BB%87n%20c%C6%A1%20ch%E1%BA%BF%20m%E1%BB%99t%20gi%C3%A1.",
       publisher: "Bộ Chính trị",
       year: 1986,
       perspective: "VN",
