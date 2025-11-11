@@ -15,6 +15,13 @@ type ChatSession = {
   updatedAt: number;
 };
 
+const createEmptySession = (customTitle?: string): ChatSession => ({
+  id: crypto.randomUUID(),
+  title: customTitle ?? "Cuoc tro chuyen moi",
+  messages: [],
+  updatedAt: Date.now(),
+});
+
 const DEFAULT_PROMPT = `
 Ban la Thay giao Lich su Viet Nam, chuyen sau giai doan 1975-1986. Hay giai thich de hieu, chinh xac va co dan chung ro rang.
 - Chi tra loi noi dung thuoc lich su Viet Nam 1975-1986 (co the nhac toi boi canh gan ke neu that su can). Neu cau hoi vuot pham vi thi tu choi lich su.
@@ -54,12 +61,7 @@ export default function ChatbotPage() {
       }
     }
 
-    const defaultSession: ChatSession = {
-      id: crypto.randomUUID(),
-      title: "Cuoc tro chuyen moi",
-      messages: [],
-      updatedAt: Date.now(),
-    };
+    const defaultSession: ChatSession = createEmptySession();
     setSessions([defaultSession]);
     setActiveSessionId(defaultSession.id);
   }, []);
@@ -117,6 +119,29 @@ export default function ChatbotPage() {
     });
   };
 
+  const handleDeleteSession = (sessionId: string) => {
+    let nextActiveId = activeSessionId;
+
+    setSessions((prev) => {
+      const remaining = prev.filter((session) => session.id !== sessionId);
+      if (remaining.length === 0) {
+        const fallback = createEmptySession();
+        nextActiveId = fallback.id;
+        return [fallback];
+      }
+
+      if (sessionId === activeSessionId) {
+        nextActiveId = remaining[0].id;
+      }
+
+      return remaining;
+    });
+
+    if (nextActiveId && nextActiveId !== activeSessionId) {
+      setActiveSessionId(nextActiveId);
+    }
+  };
+
   const handleSubmit = async () => {
     if (!canSend || !activeSessionId) return;
     setLoading(true);
@@ -163,12 +188,7 @@ export default function ChatbotPage() {
   };
 
   const handleNewChat = () => {
-    const newSession: ChatSession = {
-      id: crypto.randomUUID(),
-      title: `Cuoc tro chuyen moi #${chatVersion + 1}`,
-      messages: [],
-      updatedAt: Date.now(),
-    };
+    const newSession: ChatSession = createEmptySession(`Cuoc tro chuyen moi #${chatVersion + 1}`);
     setSessions((prev) => [newSession, ...prev]);
     setActiveSessionId(newSession.id);
     setInput("");
@@ -203,23 +223,37 @@ export default function ChatbotPage() {
             <ul className="space-y-2">
               {sessions.map((session) => (
                 <li key={session.id}>
-                  <button
-                    onClick={() => setActiveSessionId(session.id)}
-                    className={`w-full rounded-2xl px-3 py-3 text-left transition ${
+                  <div
+                    className={`group flex w-full items-center gap-2 rounded-2xl px-3 py-3 transition ${
                       session.id === activeSessionId
                         ? "bg-white/10 text-white shadow-inner shadow-black/40"
                         : "text-gray-300 hover:bg-white/5 hover:text-white"
                     }`}
                   >
-                    <p className="text-xs uppercase tracking-[0.25em] text-white/60">Chat</p>
-                    <p className="truncate text-sm font-semibold">{session.title}</p>
-                    <span className="text-[10px] text-gray-500">
-                      {new Date(session.updatedAt).toLocaleDateString("vi-VN", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </span>
-                  </button>
+                    <button
+                      onClick={() => setActiveSessionId(session.id)}
+                      className="flex-1 text-left"
+                    >
+                      <p className="text-xs uppercase tracking-[0.25em] text-white/60">Chat</p>
+                      <p className="truncate text-sm font-semibold">{session.title}</p>
+                      <span className="text-[10px] text-gray-500">
+                        {new Date(session.updatedAt).toLocaleDateString("vi-VN", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                    </button>
+                    <button
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleDeleteSession(session.id);
+                      }}
+                      aria-label="Xoa cuoc tro chuyen"
+                      className="rounded-xl border border-white/20 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-white opacity-0 transition group-hover:opacity-100 hover:border-[#b5964d] hover:text-[#b5964d]"
+                    >
+                      Xoa
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>
