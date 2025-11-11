@@ -180,12 +180,8 @@ export default function ChatbotPage() {
     <div className="section">
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-3">
-          <span className="hero-label">Tro ly Gemini</span>
+          <span className="hero-label">Tro ly Bao Tang So</span>
           <h1 className="hero-title">Chatbot 1975-1986</h1>
-          <p className="hero-description max-w-2xl">
-            Chatbot su dung OpenRouter de ho tro tra loi cau hoi ve giai doan 1975-1986. Nen cau hinh API key qua bien
-            moi truong hoac luu tam bang localStorage.
-          </p>
         </div>
         <button
           onClick={handleNewChat}
@@ -228,7 +224,6 @@ export default function ChatbotPage() {
               ))}
             </ul>
           </div>
-          <p className="mt-4 text-[11px] text-gray-500">Luu tai localStorage, giong sidebar ChatGPT.</p>
         </aside>
 
         <div className="flex-1 rounded-3xl border border-white/10 bg-black/40 p-6">
@@ -279,10 +274,6 @@ export default function ChatbotPage() {
               Gui
             </button>
           </div>
-          <p className="mt-4 text-xs text-gray-500">
-            System prompt duoc doc tu localStorage voi khoa <code>gemini-system-prompt</code>. Ban co the chinh sua trong
-            <code> src/app/chatbot/page.tsx</code> neu can.
-          </p>
         </div>
       </section>
     </div>
