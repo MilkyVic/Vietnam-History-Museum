@@ -2,31 +2,31 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 
-interface Message {
+type Message = {
   id: string;
   role: "user" | "model";
   text: string;
-}
+};
 
-interface ChatSession {
+type ChatSession = {
   id: string;
   title: string;
   messages: Message[];
   updatedAt: number;
-}
+};
 
 const DEFAULT_PROMPT = `
-Bạn là Thầy giáo Lịch sử Việt Nam, chuyên sâu giai đoạn 1975–1986. Nhiệm vụ của bạn: giảng giải dễ hiểu, chính xác, có dẫn chứng rõ ràng.
-- Phạm vi: chỉ trả lời nội dung lịch sử Việt Nam 1975–1986 (có thể lấy bối cảnh trước/sau gần kề nếu thật sự cần). Nếu ngoài phạm vi thì từ chối lịch sự.
-- Mọi luận điểm chính phải kèm nguồn đáng tin (sách/giáo trình, bài nghiên cứu, văn kiện…). Định dạng gợi ý: [Tác giả, Năm, trang] hoặc [Nguồn, liên kết]. Nếu chưa đủ nguồn hãy nói rõ “Chưa đủ nguồn để kết luận”.
-- Bố cục trả lời: (1) Tóm tắt ngắn 2–3 câu; (2) Phân tích chi tiết gồm các mục: Bối cảnh – Diễn biến – Hệ quả – Tranh luận sử học – Tài liệu tham khảo; có thể thêm Flashcards/Câu hỏi ôn tập nếu phù hợp.
-- Luôn tách dữ kiện với diễn giải, nêu các góc nhìn sử học nếu có tranh luận.
-- Ngôn ngữ sư phạm, trung lập, nêu rõ mốc thời gian.
-- Nếu hỏi những câu hỏi khác ngoài phạm vi năm 1975-1986 của Việt Nam, bạn sẽ từ chối trả lời
+Ban la Thay giao Lich su Viet Nam, chuyen sau giai doan 1975-1986. Hay giai thich de hieu, chinh xac va co dan chung ro rang.
+- Chi tra loi noi dung thuoc lich su Viet Nam 1975-1986 (co the nhac toi boi canh gan ke neu that su can). Neu cau hoi vuot pham vi thi tu choi lich su.
+- Moi luan diem chinh phai di kem nguon dang tin (sach/giao trinh, bai nghien cuu, van kien). Dinh dang goi y: [Tac gia, Nam, trang] hoac [Nguon, lien ket]. Neu chua du nguon hay thong bao "Chua du nguon de ket luan".
+- Cau truc: (1) Tom tat ngan 2-3 cau. (2) Phan tich chi tiet: Boi canh - Dien bien - He qua - Tranh luan su hoc - Tai lieu tham khao. Co the bo sung flashcard/cau hoi on tap khi hop ly.
+- Phan biet du kien va dien giai, neu ro cac goc nhin su hoc neu ton tai tranh luan.
+- Ngon ngu su pham, trung lap, neu ro moc thoi gian cu the.
+- Tra loi bang van ban thuong (plain text), khong dung Markdown hay ky hieu dam/nghieng (khong **bold**, *italic*, dau sao, dau gach). Neu can nhan manh thi dung cau noi truc tiep.
+- Neu cau hoi nam ngoai pham vi 1975-1986, hay tu choi va moi nguoi dung dat cau hoi phu hop.
 `;
 
 export default function ChatbotPage() {
-  const [apiKey, setApiKey] = useState("");
   const [systemPrompt, setSystemPrompt] = useState(DEFAULT_PROMPT);
   const [input, setInput] = useState("");
   const [sessions, setSessions] = useState<ChatSession[]>([]);
@@ -37,11 +37,10 @@ export default function ChatbotPage() {
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const storedKey = localStorage.getItem("gemini-api-key");
     const storedPrompt = localStorage.getItem("gemini-system-prompt");
     const storedSessions = localStorage.getItem("chatbot-sessions");
-    if (storedKey) setApiKey(storedKey);
     if (storedPrompt) setSystemPrompt(storedPrompt);
+
     if (storedSessions) {
       try {
         const parsed: ChatSession[] = JSON.parse(storedSessions);
@@ -51,12 +50,13 @@ export default function ChatbotPage() {
           return;
         }
       } catch {
-        console.warn("Không đọc được lịch sử chat, sẽ tạo mới.");
+        console.warn("Khong doc duoc lich su chat, se tao moi.");
       }
     }
+
     const defaultSession: ChatSession = {
       id: crypto.randomUUID(),
-      title: "Cuộc trò chuyện mới",
+      title: "Cuoc tro chuyen moi",
       messages: [],
       updatedAt: Date.now(),
     };
@@ -90,9 +90,11 @@ export default function ChatbotPage() {
 
   const sessionTitleFrom = (text: string) => {
     const clean = text.replace(/\s+/g, " ").trim();
-    if (clean.length === 0) return "Cuộc trò chuyện mới";
+    if (clean.length === 0) return "Cuoc tro chuyen moi";
     return clean.length > 42 ? `${clean.slice(0, 39)}...` : clean;
   };
+
+  const formatMessageText = (text: string) => text.replace(/\*\*/g, "");
 
   const updateSessionMessages = (sessionId: string, updater: (prev: Message[]) => Message[]) => {
     setSessions((prev) => {
@@ -136,7 +138,6 @@ export default function ChatbotPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          apiKey: apiKey || undefined,
           systemPrompt,
           history: historyPayload.map(({ role, text }) => ({ role, text })),
         }),
@@ -144,18 +145,18 @@ export default function ChatbotPage() {
 
       if (!response.ok) {
         const data = await response.json().catch(() => null);
-        throw new Error(data?.error || "Gemini trả về lỗi.");
+        throw new Error(data?.error || "Gemini tra ve loi.");
       }
 
       const data = await response.json();
       const reply: Message = {
         id: crypto.randomUUID(),
         role: "model",
-        text: data.text || "(Không có phản hồi)",
+        text: data.text || "(Khong co phan hoi)",
       };
       updateSessionMessages(activeSessionId, (prev) => [...prev, reply]);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Không gửi được yêu cầu.");
+      setError(err instanceof Error ? err.message : "Khong gui duoc yeu cau.");
     } finally {
       setLoading(false);
     }
@@ -164,7 +165,7 @@ export default function ChatbotPage() {
   const handleNewChat = () => {
     const newSession: ChatSession = {
       id: crypto.randomUUID(),
-      title: `Cuộc trò chuyện mới #${chatVersion + 1}`,
+      title: `Cuoc tro chuyen moi #${chatVersion + 1}`,
       messages: [],
       updatedAt: Date.now(),
     };
@@ -179,29 +180,29 @@ export default function ChatbotPage() {
     <div className="section">
       <div className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-3">
-          <span className="hero-label">Trợ lý Gemini</span>
+          <span className="hero-label">Tro ly Gemini</span>
           <h1 className="hero-title">Chatbot 1975-1986</h1>
           <p className="hero-description max-w-2xl">
-            Chatbot sử dụng OpenRouter để hỗ trợ trả lời câu hỏi về giai đoạn 1975-1986. Nên cấu hình API key qua biến
-            môi trường hoặc lưu tạm bằng localStorage.
+            Chatbot su dung OpenRouter de ho tro tra loi cau hoi ve giai doan 1975-1986. Nen cau hinh API key qua bien
+            moi truong hoac luu tam bang localStorage.
           </p>
         </div>
         <button
           onClick={handleNewChat}
           className="inline-flex items-center justify-center rounded-2xl border border-white/20 bg-black/30 px-4 py-3 text-xs font-semibold tracking-[0.2em] text-white transition hover:border-[#b5964d] hover:text-[#b5964d]"
         >
-          CHAT MỚI #{chatVersion}
+          CHAT MOI #{chatVersion}
         </button>
       </div>
 
       <section className="flex min-h-[520px] gap-6 rounded-3xl border border-white/10 bg-black/30 p-4 shadow-xl shadow-black/40">
         <aside className="hidden w-64 flex-shrink-0 flex-col rounded-3xl border border-white/10 bg-black/50 p-4 text-sm text-white lg:flex">
           <div className="mb-4 flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-gray-400">
-            <span>Cuộc trò chuyện</span>
+            <span>Cuoc tro chuyen</span>
           </div>
           <div className="flex-1 overflow-y-auto pr-1">
             {sessions.length === 0 && (
-              <p className="text-xs text-gray-500">Chưa có lịch sử. Bắt đầu một cuộc trò chuyện mới.</p>
+              <p className="text-xs text-gray-500">Chua co lich su. Bat dau mot cuoc tro chuyen moi.</p>
             )}
             <ul className="space-y-2">
               {sessions.map((session) => (
@@ -227,7 +228,7 @@ export default function ChatbotPage() {
               ))}
             </ul>
           </div>
-          <p className="mt-4 text-[11px] text-gray-500">Lưu tại localStorage, giống sidebar ChatGPT.</p>
+          <p className="mt-4 text-[11px] text-gray-500">Luu tai localStorage, giong sidebar ChatGPT.</p>
         </aside>
 
         <div className="flex-1 rounded-3xl border border-white/10 bg-black/40 p-6">
@@ -237,7 +238,7 @@ export default function ChatbotPage() {
           >
             {messages.length === 0 && (
               <p className="text-sm text-gray-400">
-                Bắt đầu cuộc trò chuyện để trợ lý gợi ý dữ kiện, nguồn tư liệu hoặc giải thích chính sách bao cấp.
+                Bat dau cuoc tro chuyen de tro ly goi y du kien, nguon tu lieu hoac giai thich chinh sach bao cap.
               </p>
             )}
             {messages.map((message) => (
@@ -248,16 +249,16 @@ export default function ChatbotPage() {
                   }`}
                 >
                   <p className="mb-1 text-[11px] uppercase tracking-[0.2em] text-white/60">
-                    {message.role === "user" ? "Bạn" : "Trợ lý"}
+                    {message.role === "user" ? "Ban" : "Tro ly"}
                   </p>
-                  <p className="whitespace-pre-wrap leading-relaxed">{message.text}</p>
+                  <p className="whitespace-pre-wrap leading-relaxed">{formatMessageText(message.text)}</p>
                 </div>
               </div>
             ))}
             {loading && (
               <div className="flex justify-start">
                 <div className="rounded-2xl border border-white/5 bg-black/60 px-4 py-3 text-sm text-gray-200">
-                  Đang tạo câu trả lời...
+                  Dang tao cau tra loi...
                 </div>
               </div>
             )}
@@ -267,7 +268,7 @@ export default function ChatbotPage() {
             <textarea
               value={input}
               onChange={(event) => setInput(event.target.value)}
-              placeholder="Đặt câu hỏi..."
+              placeholder="Dat cau hoi..."
               className="min-h-[96px] flex-1 rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white focus:border-[#b5964d] focus:outline-none"
             />
             <button
@@ -275,17 +276,15 @@ export default function ChatbotPage() {
               disabled={!canSend}
               className="rounded-2xl bg-[#b5964d] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#d5b86f] disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Gửi
+              Gui
             </button>
           </div>
           <p className="mt-4 text-xs text-gray-500">
-            API key và system prompt được đọc từ localStorage với khóa <code>gemini-api-key</code> và{" "}
-            <code>gemini-system-prompt</code>. Bạn có thể chỉnh trong <code>src/app/chatbot/page.tsx</code>.
+            System prompt duoc doc tu localStorage voi khoa <code>gemini-system-prompt</code>. Ban co the chinh sua trong
+            <code> src/app/chatbot/page.tsx</code> neu can.
           </p>
         </div>
       </section>
     </div>
   );
 }
-
-

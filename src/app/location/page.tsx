@@ -7,8 +7,8 @@ export default function LocationPage() {
   const sources = data.sources;
   return (
     <div className="section">
-      <h1 className="page-heading">Địa điểm & Giờ mở cửa</h1>
-      <p className="page-subtitle">123 Đường Trưng bày, Quận 1, TP.HCM • Mở cửa 9:00–17:00</p>
+      <h1 className="page-heading">Địa điểm</h1>
+      
       <section>
         <h2 className="section-heading">Bản đồ sự kiện</h2>
         <MapView events={events} height={420} />
